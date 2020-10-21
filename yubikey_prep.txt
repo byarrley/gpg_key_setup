@@ -1,0 +1,30 @@
+will want to clear and reset yubikeys
+
+ykman openpgp reset # This removes any old gpg keys 
+
+gpg --card-edit 
+    admin
+    key-attr
+    RSA and 4096 #For now, yubikey might offer support for ECC in the near future
+
+gpg --card-status
+
+gpg --card-edit
+    passwd 
+    Change Admin Pin and Pin 
+
+    name
+    lang
+
+openssl rand -base64 32  #For passwd creation
+
+
+
+gpg --batch --passphrase $PASSWD \
+    --quick-generate-key "$USER_NAME <$USER_EMAIL>" $KALGO cert $EXP_DATE
+FPR=$(gpg --list-options show-only-fpr-mbox --list-secret-keys | awk '{print $1}')
+printf "\nFinger Print: $FPR\n\n"
+printf "\nEDIT KEYS\n"
+gpg --batch --passphrase $PASSWD --quick-add-key $FPR $KALGO encrypt $EXP_DATE
+gpg --batch --passphrase $PASSWD --quick-add-key $FPR $KALGO sign $EXP_DATE
+gpg --batch --passphrase $PASSWD --quick-add-key $FPR $KALGO auth $EXP_DATE
