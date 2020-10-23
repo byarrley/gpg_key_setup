@@ -1,6 +1,7 @@
 #!/bin/bash
 # Keys should have already been loaded
 set -eu
+CHILD_DIR=$PARENT_DIR/to_card
 
 invalid_responce=true
 counter=0
@@ -11,9 +12,9 @@ while [ $invalid_responce = true ]; do
             printf "\nNow Moving Keys\nPLEASE FOLLOW PROMTS\n"
             counter=$((counter+1))
             export counter
-            ./move_keys.sh
-            ./delete_keys.sh
-            ./import_keys.sh   # key_file has been set somewhere else (either in generate or import)
+            $CHILD_DIR/move_keys.sh
+            $CHILD_DIR/delete_keys.sh
+            $CHILD_DIR/import_keys.sh   # key_file has been set somewhere else (either in generate or import)
             invalid_responce=true
             ;;
         [nN][eE][sS|[nN])
