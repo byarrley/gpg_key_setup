@@ -1,7 +1,7 @@
 #!/bin/bash
 <<COMMENT
 This Script is the parent script to walk a user though the setup or a yubikey (or other gpg smartcard)
-Either creating or importing a key, then moveing it to the card/s
+Either creating or importing a key, then moving it to the card/s
 COMMENT
 
 set -eu
@@ -33,7 +33,6 @@ case $i in
     -i | --import )
                 new_key=false
                 shift
-                #key_file="${@: -1}"
                 key_file="$1"
                 ;;
 
@@ -51,8 +50,7 @@ if [ $new_key = true ]; then
     echo "Your Email:"
     read email
 
-    #$PARENT_DIR/gpg_keys/generate_keys.sh -n $name -e $email
-    $PARENT_DIR/gpg_keys/test.sh -n $name -e $email
+    $PARENT_DIR/gpg_keys/generate_keys.sh -n $name -e $email
 else
     export key_file
     $PARENT_DIR/gpg_keys/import_keys.sh
